@@ -1,8 +1,13 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import React, { useContext } from 'react';
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { ColorModeContext } from '../App';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 const Navbar = () => {
+  const colorMode = useContext(ColorModeContext);
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -24,6 +29,13 @@ const Navbar = () => {
         <Button color="inherit" component={Link} to="/dashboard">
           Dashboard
         </Button>
+        <IconButton color="inherit" onClick={colorMode.toggleColorMode}>
+          {document.body.style.backgroundColor === 'rgb(255, 255, 255)' ? (
+            <DarkModeIcon />
+          ) : (
+            <LightModeIcon />
+          )}
+        </IconButton>
       </Toolbar>
     </AppBar>
   );
