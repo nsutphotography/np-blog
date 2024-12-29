@@ -1,5 +1,5 @@
-import React, { useState, createContext } from 'react';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import React, { useState, createContext, useEffect } from 'react';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -7,24 +7,28 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
+import { getInitialMode, saveModeToLocalStorage, createAppTheme } from './utils/theme';
 
 // Context for theme mode
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 const App = () => {
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState(getInitialMode); // Default to dark mode
+
+  useEffect(() => {
+    // Save the initial mode to localStorage
+    saveModeToLocalStorage(mode);
+  }, [mode]);
 
   const colorMode = {
     toggleColorMode: () => {
-      setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      const newMode = mode === 'light' ? 'dark' : 'light';
+      setMode(newMode);
+      saveModeToLocalStorage(newMode);
     },
   };
 
-  const theme = createTheme({
-    palette: {
-      mode,
-    },
-  });
+  const theme = createAppTheme(mode);
 
   return (
     <ColorModeContext.Provider value={colorMode}>

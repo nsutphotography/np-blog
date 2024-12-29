@@ -8,6 +8,8 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 const Navbar = () => {
   const colorMode = useContext(ColorModeContext);
 
+  const isDarkMode = localStorage.getItem('themeMode') === 'dark';
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -30,11 +32,7 @@ const Navbar = () => {
           Dashboard
         </Button>
         <IconButton color="inherit" onClick={colorMode.toggleColorMode}>
-          {document.body.style.backgroundColor === 'rgb(255, 255, 255)' ? (
-            <DarkModeIcon />
-          ) : (
-            <LightModeIcon />
-          )}
+          {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
         </IconButton>
       </Toolbar>
     </AppBar>
