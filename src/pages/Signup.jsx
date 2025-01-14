@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import debug from 'debug';
+import debugLib from 'debug';
 
 // Create a debug instance for the 'signup' module
-const log = debug('signup');
+const debug = debugLib('app:signup');
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -15,10 +15,10 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
+    debug('Attempting to sign up with email:', email, 'username:', username);
     e.preventDefault();
 
-    // Log the input data for debugging
-    log('Attempting to sign up with email:', email, 'username:', username);
+    // debug the input data for debugging
 
     try {
       // Send POST request to the backend for signup
@@ -28,14 +28,14 @@ const Signup = () => {
         password,
       });
 
-      log('Signup response:', response);
+      debug('Signup response:', response);
 
       if (response.status === 201) {
         // If signup is successful, redirect to login
         navigate('/login');
       }
     } catch (error) {
-      log('Signup failed:', error);
+      debug('Signup failed:', error);
       setError('Signup failed. Please try again.');
     }
   };
