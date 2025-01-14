@@ -21,7 +21,9 @@ const Dashboard = () => {
       },
     })
       .then((response) => {
-        setBlogs(response.data); // Assuming the response data is an array of blog objects
+        const sortedBlogs = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        setBlogs(sortedBlogs); // Assuming the response data is an array of blog objects
       })
       .catch((error) => {
         console.error('Error fetching user blogs:', error);
