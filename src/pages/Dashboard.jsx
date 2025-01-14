@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardContent, Typography, Container, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Container, Grid, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [blogs, setBlogs] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -32,6 +34,9 @@ const Dashboard = () => {
       <Typography variant="h4" gutterBottom>
         Dashboard Page
       </Typography>
+      <Button variant="contained" color="primary" onClick={() => navigate('/create-blog')} sx={{ mb: 3 }}>
+        Create Post
+      </Button>
       {error && <Typography color="error" paragraph>{error}</Typography>}
       <Grid container spacing={3}>
         {blogs.map((blog) => (
