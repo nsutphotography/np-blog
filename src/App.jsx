@@ -6,8 +6,9 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import Dashboard from './pages/Dashboard';
+import Dashboard from '@/pages/Dashboard';
 import { getInitialMode, saveModeToLocalStorage, createAppTheme } from './utils/theme';
+import CreateBlog from '@/pages/CreateBlog';
 
 // Context for theme mode
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/create-blog" element={<CreateBlog />} />
         </Routes>
       </ThemeProvider>
     </ColorModeContext.Provider>
