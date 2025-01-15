@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import Dashboard from '@/pages/Dashboard';
 import { getInitialMode, saveModeToLocalStorage, createAppTheme } from './utils/theme';
 import CreateBlog from '@/pages/CreateBlog';
+import { AuthProvider } from './context/AuthContext';
 
 // Context for theme mode
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
@@ -35,7 +36,7 @@ const App = () => {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Navbar />
+          <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />

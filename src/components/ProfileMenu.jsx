@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Menu, MenuItem, IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const userDataState = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -16,6 +19,9 @@ const ProfileMenu = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
+    userDataState.setUserData(null);
+    navigate('/');
     console.log('Logout clicked');
     handleMenuClose();
   };

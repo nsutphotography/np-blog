@@ -6,11 +6,17 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ProfileMenu from './ProfileMenu';
 
+import { AuthContext } from '../context/AuthContext';
+import { use } from 'react';
+import debugLib from 'debug';
+const debug = debugLib('app:navbar');
 
 const Navbar = () => {
   const colorMode = useContext(ColorModeContext);
   const accessToken = localStorage.getItem('accessToken');
 
+  const userDataState = useContext(AuthContext);
+  debug('User data:', userDataState.userData);
   const isDarkMode = localStorage.getItem('themeMode') === 'dark';
 
   return (
@@ -19,11 +25,13 @@ const Navbar = () => {
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           NP-Blog
         </Typography>
-        {!accessToken ? (
-          <>
-            <Button color="inherit" component={Link} to="/">
+        <Button color="inherit" component={Link} to="/">
               Home
             </Button>
+        {debug('User data: before home signup login', userDataState.userData)}
+        {!userDataState.userData ? (
+          <>
+            
             <Button color="inherit" component={Link} to="/signup">
               Signup
             </Button>
