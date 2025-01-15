@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import debugLib from 'debug';
+import { AuthContext } from '../context/AuthContext';
 
 // Create a debug instance for the 'login' module
 const debug = debugLib('app:login');
@@ -13,6 +14,10 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  // const [userData ,setUseData] = useContext(AuthContext);
+  // const setUserData = useContext(AuthContext);
+  const AuthContextUser = useContext(AuthContext);
+  
 
   const handleLogin = async (e) => {
     debug('Attempting to login with email:', email);
@@ -37,7 +42,14 @@ const Login = () => {
         console.log("at",response.data.accessToken);
         localStorage.setItem('accessToken', response.data.accessToken);
 
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        // localStorage.setItem('user', JSON.stringify(response.data.user));
+        debug("here");
+        debug("AuthContext userDAta",AuthContextUser.userData);
+        AuthContextUser.setUserData(response.data.user);
+        debug("here");
+        debug("AuthContext userDAta",AuthContextUser.userData);
+        // debug("AuthDontext userDAta",userData);
+        debug('Login successful:', response.data);
 
         // Redirect to the dashboard after successful login
         navigate('/dashboard');
